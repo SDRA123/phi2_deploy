@@ -11,7 +11,7 @@ tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME, trust_remote_code=True)
 model = AutoModelForCausalLM.from_pretrained(MODEL_NAME, torch_dtype="auto", trust_remote_code=True)
 tokenizer.pad_token = tokenizer.eos_token
 model.to(device)
-model.eval()
+
 print("Model loaded successfully.")
 
 # Handler function
@@ -25,15 +25,13 @@ def handler(job):
 
         # Tokenize and move to device
         inputs = tokenizer(prompt, return_tensors="pt", padding=True).to(device)
+        inputs = {k: v.to(device) for k, v in inputs.items()}
+
 
         # Generate text
         outputs = model.generate(
             **inputs,
             max_length=200,
-            do_sample=True,
-            top_p=0.9,
-            temperature=0.7,
-            num_return_sequences=1
         )
 
         # Decode output
