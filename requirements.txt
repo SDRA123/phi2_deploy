@@ -1,3 +1,7 @@
 torch
 transformers
 runpod
+joblib
+huggingface-hub
+protobuf
+sentencepiece
