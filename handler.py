@@ -24,7 +24,7 @@ def handler(job):
             return {"error": "No 'prompt' provided in input."}
 
         # Tokenize and move to device
-        inputs = tokenizer(prompt, return_tensors="pt", padding=True).to(device)
+        inputs = tokenizer(prompt, return_tensors="pt", padding=True)
         inputs = {k: v.to(device) for k, v in inputs.items()}
 
 
